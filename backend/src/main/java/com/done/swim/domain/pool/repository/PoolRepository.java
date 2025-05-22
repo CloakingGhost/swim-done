@@ -37,10 +37,9 @@ public interface PoolRepository extends JpaRepository<Pool, Long> {
     Optional<Pool> getPoolWithName(@Param("poolName") String poolName, @Param("nowDayOfWeek") Week nowDayOfWeek);
 
     /**
-     * 지역의 수영장 요약 정보 + 유저의 찜 목록
+     * 지역의 수영장 요약 정보
      *
      * @param section 지역명
-     * @param userId  유저 아이디
      */
     @Query("""
             SELECT p
