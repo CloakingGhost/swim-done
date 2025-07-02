@@ -1,5 +1,6 @@
 package com.done.swim.domain.pool.service;
 
+import com.done.swim.domain.pool.dto.responsedto.PagingPoolWithSectionResponseDto;
 import com.done.swim.domain.pool.dto.responsedto.PoolDetailResponseDto;
 import com.done.swim.domain.pool.dto.responsedto.PoolWithSectionResponseDto;
 import com.done.swim.domain.pool.dto.responsedto.PoolWithSwimmingTimeResponseDto;
@@ -10,6 +11,8 @@ import com.done.swim.global.exception.ErrorCode;
 import com.done.swim.global.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +59,14 @@ public class PoolService {
         List<Pool> pools = poolRepository.findBySection(section);
 
         return pools.stream().map(p -> PoolWithSectionResponseDto.from(p, userId)).toList();
+    }
+
+    /**
+     * @param section 지역명
+     * @param userId  유저 아이디
+     */
+    public PagingPoolWithSectionResponseDto getPoolsWithSection(String section, Long userId, Pageable pageable) {
+        Page<Pool> pools = poolRepository.findBySection(section, pageable);
+        return PagingPoolWithSectionResponseDto.from(pools, userId);
     }
 }

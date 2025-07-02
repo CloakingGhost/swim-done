@@ -14,11 +14,12 @@ export default function PoolList() {
   const dispatch = useDispatch();
   const isDetailViewHidden = useSelector((state) => state.detailView.isHidden);
   const section = useSelector((state) => state.kakaoMap.section);
-  const [pools, setPools] = useState(useSelector((state) => state.kakaoMap.pools));
+  const reduxPools = useSelector((state) => state.kakaoMap.pools);
+  const [pools, setPools] = useState(reduxPools);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(6);
   const [hasNext, setHasNext] = useState(true);
   const { toggleMark, showLoginModal, setShowLoginModal } = useToggleMark();
 
@@ -28,9 +29,9 @@ export default function PoolList() {
   const getPools = () => {
     setIsLoading(true);
     try {
-      //처음에 6개만 보여줬다가 스크롤 내려가면 더 보여주기, 데이터는 pools 에 있음
-      setCurrentIndex((prev) => prev + 6);
-      setHasNext(currentIndex < pools.length);
+      const nextIndex = currentIndex + 6;
+      setCurrentIndex(nextIndex);
+      setHasNext(nextIndex < pools.length);
     } catch {
       // TODO: 에러 핸들링 예정
       setHasNext(false);
@@ -39,7 +40,7 @@ export default function PoolList() {
     }
   };
 
-  const onIntersect = async (entry, observer) => {
+  const onIntersect = (entry, observer) => {
     if (isLoading || !hasNext) return;
     getPools();
   };
@@ -54,9 +55,18 @@ export default function PoolList() {
     if (section === null) {
       navigate('/');
     }
-  }, []);
+  }, [section, navigate]);
 
-  useEffect(() => {}, [pools]);
+  useEffect(() => {
+    setPools(reduxPools);
+    if (reduxPools && reduxPools.length > 0) {
+      setCurrentIndex(6);
+      setHasNext(6 < reduxPools.length);
+    } else {
+      setCurrentIndex(0);
+      setHasNext(false);
+    }
+  }, [reduxPools]);
 
   return (
     <>

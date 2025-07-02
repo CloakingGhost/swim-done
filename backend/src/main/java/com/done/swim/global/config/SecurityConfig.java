@@ -86,6 +86,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin(CORS_ALLOWED_ORIGIN);
         configuration.addAllowedOrigin("http://localhost:5173"); // ✅ 프론트엔드 로컬 개발 환경 추가
+        configuration.addAllowedOrigin("http://localhost:4173"); // ✅ 프론트엔드 로컬 개발 환경 추가
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);

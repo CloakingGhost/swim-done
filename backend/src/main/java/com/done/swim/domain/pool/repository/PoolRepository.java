@@ -2,6 +2,8 @@ package com.done.swim.domain.pool.repository;
 
 import com.done.swim.domain.pool.entity.Pool;
 import com.done.swim.domain.swimmingtime.entity.Week;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -48,4 +50,17 @@ public interface PoolRepository extends JpaRepository<Pool, Long> {
             WHERE p.section = :section
             """)
     List<Pool> findBySection(@Param("section") String section);
+
+    @Query(value = """
+            SELECT p
+            FROM Pool p
+            LEFT JOIN p.poolMarks pm
+            WHERE p.section = :section
+            """,
+            countQuery = """
+            SELECT COUNT(p)
+            FROM Pool p
+            WHERE p.section = :section
+            """)
+    Page<Pool> findBySection(@Param("section") String section, Pageable pageable);
 }

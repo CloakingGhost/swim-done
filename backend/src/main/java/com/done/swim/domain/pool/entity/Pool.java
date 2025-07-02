@@ -4,10 +4,7 @@ import com.done.swim.domain.poolmark.entity.PoolMark;
 import com.done.swim.domain.poolreview.entity.PoolReview;
 import com.done.swim.domain.swimmingtime.entity.SwimmingTime;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 @Table(name = "pools")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@ToString
 public class Pool {
 
     @Id

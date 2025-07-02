@@ -1,12 +1,15 @@
 package com.done.swim.domain.pool.controller;
 
 import com.done.swim.common.ApiResponse;
+import com.done.swim.domain.pool.dto.responsedto.PagingPoolWithSectionResponseDto;
 import com.done.swim.domain.pool.dto.responsedto.PoolWithSectionResponseDto;
 import com.done.swim.domain.pool.dto.responsedto.PoolWithSwimmingTimeResponseDto;
 import com.done.swim.domain.pool.service.PoolService;
 import com.done.swim.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,12 +28,36 @@ public class SectionController {
 
     /**
      * 특정 지역의 수영장 조회
+     *
+     * @deprecated
      */
-    @GetMapping("/{section}/pools")
+//    @GetMapping("/{section}/pools")
     public ResponseEntity<ApiResponse<List<PoolWithSectionResponseDto>>> getPoolsWithSection(
             @AuthenticationPrincipal User user,
             @PathVariable String section) {
         List<PoolWithSectionResponseDto> pools = poolService.getPoolsWithSection(section, user != null ? user.getId() : null);
+
+        return ResponseEntity.ok(
+                ApiResponse.ok(pools)
+        );
+
+    }
+
+    /**
+     * 특정 지역의 수영장 조회
+     */
+    @GetMapping("/{section}/pools")
+    public ResponseEntity<ApiResponse<PagingPoolWithSectionResponseDto>> getPoolsWithSection(
+            @AuthenticationPrincipal User user,
+            @PathVariable String section,
+            Pageable pageable) {
+        PagingPoolWithSectionResponseDto pools = poolService.getPoolsWithSection(
+                section,
+                user != null ? user.getId() : null,
+                pageable
+        );
+        log.info("pools: {}", pools.getPools().size());
+
         return ResponseEntity.ok(
                 ApiResponse.ok(pools)
         );

@@ -166,7 +166,9 @@ export default function KakaoMapContainer() {
         customOverlay.setMap(null);
         polygon.setOptions({ fillColor: '#fff' });
 
-        const { data: pools } = await kakaoMapApi.getSectionWithPools(section);
+        const { data } = await kakaoMapApi.getSectionWithPools(section);
+        console.log(data);
+        const pools = data.pools;
         const markers = pools.map(({ latitude, longitude, name }) =>
           createMarker(new kakao.maps.LatLng(latitude, longitude), name),
         );
