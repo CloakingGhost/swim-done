@@ -64,7 +64,7 @@ jobs:
           echo "VITE_DOMAIN=${{ secrets.VITE_DOMAIN }}" >> .env
           echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
           echo "VITE_KAKAOMAP_API_KEY=${{ secrets.VITE_KAKAOMAP_API_KEY }}" >> .env
-          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
+          echo "API_SERVER_URL=${{ secrets.API_SERVER_URL }}" >> .env
 
       # 캐시 저장 설정을 위한 action(라이브러리)
       # path : 캐시로 관리할 경로
