@@ -1,0 +1,25 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+title: RepoConfig
+description: Gemini Code Assist configuration for Full-stack project.
+
+# 1. Options to prevent indiscriminate/unnecessary reviews
+ignore_patterns:
+  - "**/node_modules/**"
+  - "**/build/**"
+  - "**/dist/**"
+  - "**/.gradle/**"
+  - "**/generated/**"
+  - "package-lock.json"
+  - "build.gradle"
+
+code_review:
+  # 2. Options to reduce review fatigue
+  max_review_comments: 10
+
+  # 3. Options for severity-based filtering
+  comment_severity_threshold: MEDIUM
+
+  pull_request_opened:
+    summary: true
+    code_review: true
+    help: false
