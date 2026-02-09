@@ -30,16 +30,52 @@ jobs:
       - name: Add Remote Server Fingerprint to Known Hosts
         run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts || true
 
+      # [수정됨] 개별 Secrets를 .env 파일로 생성
       - name: Create .env file
-        run: echo """${{ secrets.ENV_FILE }}""" >> .env
+        run: |
+          touch .env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> .env
+          echo "DATABASE_PORT=${{ secrets.DATABASE_PORT }}" >> .env
+          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
+          echo "DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }}" >> .env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "ORIGIN=${{ secrets.ORIGIN }}" >> .env
+          echo "SECURE=${{ secrets.SECURE }}" >> .env
+          echo "COOKIE_DOMAIN=${{ secrets.COOKIE_DOMAIN }}" >> .env
+          echo "SAMESITE=${{ secrets.SAMESITE }}" >> .env
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
+          echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+          echo "ACCESS_KEY=${{ secrets.ACCESS_KEY }}" >> .env
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "BUCKET_NAME=${{ secrets.BUCKET_NAME }}" >> .env
+          echo "REGION=${{ secrets.REGION }}" >> .env
+          echo "CORS_ALLOWED_ORIGIN=${{ secrets.CORS_ALLOWED_ORIGIN }}" >> .env
+          echo "NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }}" >> .env
+          echo "NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }}" >> .env
+          echo "KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}" >> .env
+          echo "KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}" >> .env
+          echo "VITE_NAVER_REDIRECT_URL=${{ secrets.VITE_NAVER_REDIRECT_URL }}" >> .env
+          echo "VITE_KAKAO_REDIRECT_URL=${{ secrets.VITE_KAKAO_REDIRECT_URL }}" >> .env
+          echo "DOCKER_REGISTRY=${{ secrets.DOCKER_REGISTRY }}" >> .env
+          echo "VITE_DOMAIN=${{ secrets.VITE_DOMAIN }}" >> .env
+          echo "VITE_API_URL=${{ secrets.VITE_API_URL }}" >> .env
+          echo "VITE_KAKAOMAP_API_KEY=${{ secrets.VITE_KAKAOMAP_API_KEY }}" >> .env
+          echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> .env
 
       # 캐시 저장 설정을 위한 action(라이브러리)
+      # path : 캐시로 관리할 경로
+      # key : 저장 & 불러올 캐시 이름(식별자)
+      # restore-keys : 만약 캐시 key를 찾지 못하면 대체할 캐시 이름
       - name: Cache Docker Image Layer
         uses: actions/cache@v4.2.0
         with:
-          path: /tmp/.buildx-cache # 캐시로 관리할 경로
-          key: docker-image-layer-cache-${{ github.sha }} # 저장 & 불러올 캐시 이름(식별자)
-          restore-keys: docker-image-layer-cache- # 만약 캐시 key를 찾지 못하면 대체할 캐시 이름
+          path: /tmp/.buildx-cache
+          key: docker-image-layer-cache-${{ github.sha }}
+          restore-keys: docker-image-layer-cache-
 
       - name: Set up Docker BuildKit
         uses: docker/setup-buildx-action@v3
@@ -49,7 +85,12 @@ jobs:
           docker buildx create --use --name buildkit
 
       - name: Docker Image Build
-        run: docker compose -f docker-compose-actions.yml build --build-arg BUILDKIT_INLINE_CACHE=1
+        run: |
+          docker compose -f docker-compose-actions.yml build \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          --build-arg VITE_DOMAIN=${{ secrets.VITE_DOMAIN }} \
+          --build-arg VITE_KAKAOMAP_API_KEY=${{ secrets.VITE_KAKAOMAP_API_KEY }} \
+          --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }}
 
       - name: Login DockerHub
         run: echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_REGISTRY }}' --password-stdin
