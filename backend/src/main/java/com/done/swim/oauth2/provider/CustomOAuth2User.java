@@ -2,12 +2,14 @@ package com.done.swim.oauth2.provider;
 
 import com.done.swim.domain.user.entity.User;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.Map;
 
+@ToString
 @Getter
 public class CustomOAuth2User implements OAuth2User {
 
