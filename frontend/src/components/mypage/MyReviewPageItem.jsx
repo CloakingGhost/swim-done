@@ -70,7 +70,7 @@ export default function MyReviewPageItem({
 
   return (
     <>
-      <article className="w-[full] mt-10 relative">
+      <article className="w-full mt-10 relative">
         <div className="flex justify-between items-baseline mb-2">
           <div className="flex gap-3 bg-blue02/30 rounded-xl text-sm pretendard-normal h-12 pl-3 pr-3">
             <img src={swimming} alt="" className="h-full w-8 aspect-square" />
@@ -94,7 +94,7 @@ export default function MyReviewPageItem({
             {/* 드롭다운 메뉴 */}
             {isToggled && (
               <div
-                className="dropdown-menu absolute top-14 w-32 h-auto right-8 bg-white rounded-md flex flex-col justify-around text-center z-[9999]"
+                className="dropdown-menu absolute top-14 w-32 h-auto right-8 bg-white rounded-md flex flex-col justify-around text-center z-9999"
               >
                 <button
                   onClick={(e) => {
@@ -126,7 +126,7 @@ export default function MyReviewPageItem({
         </div>
 
         {/* 텍스트 컨텐츠 */}
-        <div className="border-b-[1px] pb-1 border-title relative z-[0]">
+        <div className="border-b pb-1 border-title relative z-0">
           <p className="mb-6 mt-6 text-2xl">{content}</p>
         </div>
       </article>

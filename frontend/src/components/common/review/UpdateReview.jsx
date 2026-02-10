@@ -44,7 +44,7 @@ export default function UpdateReview() {
         <DetailViewHeader closeButtonImage={xmark} backButtonImage={back}></DetailViewHeader>
       </div>
       <main className="flex flex-col items-center w-full">
-        <section className="w-[80%] flex flex-col items-center mb-10">
+        <section className="w-4/5 flex flex-col items-center mb-10">
           <h1 className="pretendard-bold text-3xl">{poolName}</h1>
         </section>
         <ReviewForm

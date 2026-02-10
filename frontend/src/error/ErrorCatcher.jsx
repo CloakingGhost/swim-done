@@ -9,7 +9,7 @@ const ErrorCatcher = ({ children }) => {
     if (!error) return;
 
     toast.error(error.message, {
-      className: 'p-0 w-[400px]',
+      className: 'p-0 w-100',
     });
   }, [error]);
 
