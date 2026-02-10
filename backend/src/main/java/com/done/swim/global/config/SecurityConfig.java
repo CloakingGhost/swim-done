@@ -46,11 +46,11 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리 설정 (stateless)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/images").authenticated()
-                        .requestMatchers("/login", "/oauth2/**", "/login-success", "/logout").permitAll() // 로그인, OAuth2, 로그아웃 엔드포인트 허용
+                        .requestMatchers("/login", "/oauth2/**", "/login/oauth2/**", "/login-success", "/logout").permitAll() // 로그인, OAuth2, 로그아웃 엔드포인트 허용
                         .requestMatchers("/api/auth/**").permitAll() // API 관련 엔드포인트 허용
                         .requestMatchers(HttpMethod.GET, "/api/pools/**", "/api/sections/**").permitAll() // GET 요청 허용
                         .requestMatchers("/api/swimmingtimes/**").permitAll()
-                        .requestMatchers("/withdraw").authenticated() // 🔥 회원 탈퇴는 인증된 사용자만 가능
+                        .requestMatchers("/api/withdraw").authenticated() // 🔥 회원 탈퇴는 인증된 사용자만 가능
                         .anyRequest().authenticated() // 그 외의 모든 요청은 인증된 사용자만 접근
                 )
                 .oauth2Login(oauth2 -> oauth2
