@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - chore/*
+      - '[0-9]*-chore-**'
 
 jobs:
   ssh-agent:
