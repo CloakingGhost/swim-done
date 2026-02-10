@@ -48,7 +48,7 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
 
         # 추가: WAS에서 보낸 Set-Cookie 헤더의 경로와 도메인을 클라이언트 환경에 맞게 조정
-        proxy_cookie_path / "/; SameSite=None; Secure";
+        proxy_cookie_path / "/"; 
         proxy_pass_header Set-Cookie;
     }
 }
