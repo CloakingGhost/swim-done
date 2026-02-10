@@ -28,11 +28,18 @@ export default function KakaoMapContainer() {
   const { setError } = useErrorResolver(ERROR_DISPLAY_MODE.TOAST);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (kakao && kakao.maps) {
+      dispatch(setMap(createMap(mapContainer.current)));
+      drawPolygons(seoulGu);
+    }
+  }, [kakao, dispatch]);
   //#region 지도 기본 설정
   const center = new kakao.maps.LatLng(37.5666454, 126.9781553); // 서울 시민청 좌표 (기본 중심점)
   const options = { center, level: 9 }; // 확대 레벨
 
+  if (!kakao?.maps) return;
+  
   let map = null;
   const polygons = [];
   const markers = [];
@@ -195,15 +202,6 @@ export default function KakaoMapContainer() {
     polygons.forEach((polygon) => polygon.setMap(display ? map : null));
   }
   //#endregion
-
-  useEffect(() => {
-    if (kakao && kakao.maps) {
-      dispatch(setMap(createMap(mapContainer.current)));
-      drawPolygons(seoulGu);
-    }
-  }, [kakao, dispatch]);
-
-  if (!kakao?.maps) return;
 
   return (
     <>
