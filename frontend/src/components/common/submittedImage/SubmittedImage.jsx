@@ -99,7 +99,7 @@ export default function SubmittedImage() {
       <main className="flex flex-col items-center w-full font-pretendard">
       {isLoading && <LoadingSpinner backgroundColor={'bg-title/30'} />}
         <DetailViewHeader backButtonImage={back} closeButtonImage={xmark}></DetailViewHeader>
-        <section className="w-[80%] flex flex-col items-center mb-10">
+        <section className="w-4/5 flex flex-col items-center mb-10">
           <h1 className="font-bold text-3xl">{poolName}</h1>
           <p className="font-medium text-body01 text-xl mb-10 mt-10">
             수정하실 시간표 이미지를 첨부해 주세요.

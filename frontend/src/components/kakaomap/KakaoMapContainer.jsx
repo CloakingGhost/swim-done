@@ -18,6 +18,8 @@ import ERROR_DISPLAY_MODE from '../../error/ERROR_DISPLAY_MODE';
 import useErrorResolver from '../../hooks/useErrorResolver.jsx';
 
 export default function KakaoMapContainer() {
+  const { kakao } = window;
+
   const mapContainer = useRef(null);
 
   const [selectedPool, setSelectedPool] = useState(null); // 선택된 수영장 데이터
@@ -26,11 +28,18 @@ export default function KakaoMapContainer() {
   const { setError } = useErrorResolver(ERROR_DISPLAY_MODE.TOAST);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  useEffect(() => {
+    if (kakao && kakao.maps) {
+      dispatch(setMap(createMap(mapContainer.current)));
+      drawPolygons(seoulGu);
+    }
+  }, [kakao, dispatch]);
   //#region 지도 기본 설정
   const center = new kakao.maps.LatLng(37.5666454, 126.9781553); // 서울 시민청 좌표 (기본 중심점)
   const options = { center, level: 9 }; // 확대 레벨
 
+  if (!kakao?.maps) return;
+  
   let map = null;
   const polygons = [];
   const markers = [];
@@ -99,7 +108,7 @@ export default function KakaoMapContainer() {
 
       // 기존 인포윈도우 내용을 비우고 새로운 컨테이너를 생성
       const container = document.createElement('div');
-      container.className = 'bg-white shadow-lg rounded-lg p-4 w-[337px] border border-gray-200';
+      container.className = 'bg-white shadow-lg rounded-lg p-4 w-84 border border-gray-200';
       setInfoWindowContainer(container); // 포탈을 위한 컨테이너 저장
       setSelectedPool(pool); // 선택한 수영장 데이터 업데이트
 
@@ -136,7 +145,7 @@ export default function KakaoMapContainer() {
     kakao.maps.event.addListener(polygon, 'mouseover', (e) => {
       polygon.setOptions({ fillColor: '#09f' });
       customOverlay.setContent(
-        `<div class="absolute bg-white border border-gray-500 rounded-sm text-lg top-[-15px] left-[15px] p-1">
+        `<div class="absolute bg-white border border-gray-500 rounded-sm text-lg -top-3.75 left-3.75 p-1">
         ${section}
       </div>`,
       );
@@ -193,13 +202,6 @@ export default function KakaoMapContainer() {
     polygons.forEach((polygon) => polygon.setMap(display ? map : null));
   }
   //#endregion
-
-  useEffect(() => {
-    if (kakao && kakao.maps) {
-      dispatch(setMap(createMap(mapContainer.current)));
-      drawPolygons(seoulGu);
-    }
-  }, []);
 
   return (
     <>

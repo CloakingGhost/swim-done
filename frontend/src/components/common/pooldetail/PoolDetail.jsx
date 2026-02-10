@@ -10,13 +10,13 @@ import Timetable from './TimeTable';
 import LoadingSpinner from '../LoadingSpinner';
 
 export default function PoolDetail() {
+  const { kakao } = window;
   const [poolDetail, setPoolDetail] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const mapContainer = useRef();
   const mapRef = useRef();
   const { poolId } = useParams();
   const { setError } = useErrorResolver();
-  
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,7 +31,7 @@ export default function PoolDetail() {
         setIsLoading(false);
       }
     })();
-  }, [poolId]);
+  }, [setError, poolId]);
 
   useEffect(() => {
     if (!isLoading && poolDetail && mapContainer.current) {
@@ -47,7 +47,9 @@ export default function PoolDetail() {
       });
       marker.setMap(mapRef.current);
     }
-  }, [isLoading, poolDetail]);
+  }, [isLoading, poolDetail, kakao]);
+
+  if (!kakao?.maps) return;
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -56,12 +58,12 @@ export default function PoolDetail() {
   return (
     <main className="flex flex-col items-center w-full">
       <DetailViewHeader closeButtonImage={xmark}></DetailViewHeader>
-      <section className="w-[80%] flex flex-col items-center mb-10">
+      <section className="w-4/5 flex flex-col items-center mb-10">
         <h1 className="font-bold text-3xl mb-1">{poolDetail?.name}</h1>
         <p className="text-body01 mb-10">{poolDetail?.address}</p>
         <div ref={mapContainer} className="w-full h-100"></div>
       </section>
-      <section className="relative border-1 w-[80%] rounded-2xl border-blue01 bg-blue02/20 pretendard-normal flex flex-col justify-center gap-1 px-4 pt-10 pb-4">
+      <section className="relative border w-4/5 rounded-2xl border-blue01 bg-blue02/20 pretendard-normal flex flex-col justify-center gap-1 px-4 pt-10 pb-4">
         <Timetable schedule={poolDetail?.swimmingTimes}></Timetable>
         <div className="text-body01 mt-2">
           <div>{poolDetail?.additionalInfo}</div>
@@ -80,13 +82,13 @@ export default function PoolDetail() {
           </button>
         </Link>
       </section>
-      <section className="text-right w-[80%] text-sm text-body01 mb-15 mt-3">
+      <section className="text-right w-4/5 text-sm text-body01 mb-15 mt-3">
         <div>위 정보의 출처는 '{poolDetail?.name}' 홈페이지입니다.</div>
         <div>
           현재 시점과 다른 정보일 수 있으니, 업데이트가 필요한 정보는 수정 제안 부탁드립니다.
         </div>
       </section>
-      <section className="flex flex-col items-center w-[80%] mb-10">
+      <section className="flex flex-col items-center w-4/5 mb-10">
         <h2 className="self-start pretendard-semibold text-2xl">리뷰</h2>
         <Link to="reviews" className="self-end" state={{ poolName: poolDetail?.name }}>
           <button className="text-white bg-blue01 w-30 h-10 rounded-[10px] pretendard-normal text-sm cursor-pointer">

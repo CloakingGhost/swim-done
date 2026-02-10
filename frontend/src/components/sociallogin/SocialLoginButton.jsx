@@ -14,7 +14,7 @@ export default function SocialLoginButton({ provider, bgColor, textColor, icon, 
     <div className="flex justify-center">
       <button
         onClick={handleLogin}
-        className={`min-w-[180px] font-semibold flex items-center ${bgColor} ${textColor} rounded-md px-40 py-4 gap-3 mb-2`}
+        className={`min-w-45 font-semibold flex items-center ${bgColor} ${textColor} rounded-md px-40 py-4 gap-3 mb-2`}
       >
         {icon}
         <span className="leading-normal">{text}</span>

@@ -40,7 +40,7 @@ export default function CreateReview() {
       <main className="flex flex-col items-center w-full">
         {isLoading && <LoadingSpinner backgroundColor={'bg-title/30'} />}
         <DetailViewHeader backButtonImage={back} closeButtonImage={xmark}></DetailViewHeader>
-        <section className="w-[80%] flex flex-col items-center mb-10">
+        <section className="w-4/5 flex flex-col items-center mb-10">
           <h1 className="font-pretendard font-bold text-3xl">{poolName}</h1>
         </section>
         <ReviewForm
