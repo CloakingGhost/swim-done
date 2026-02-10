@@ -94,7 +94,7 @@ export default function MyReviewPageItem({
             {/* 드롭다운 메뉴 */}
             {isToggled && (
               <div
-                className="dropdown-menu absolute top-14 w-32 h-auto right-8 bg-white rounded-md flex flex-col justify-around text-center z-9999"
+                className="dropdown-menu absolute top-14 w-32 h-auto right-8 bg-white rounded-md flex flex-col justify-around text-center z-50"
               >
                 <button
                   onClick={(e) => {

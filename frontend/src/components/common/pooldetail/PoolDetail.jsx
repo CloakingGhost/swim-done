@@ -17,7 +17,7 @@ export default function PoolDetail() {
   const mapRef = useRef();
   const { poolId } = useParams();
   const { setError } = useErrorResolver();
-  
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -47,8 +47,7 @@ export default function PoolDetail() {
       });
       marker.setMap(mapRef.current);
     }
-  }, [isLoading, poolDetail]);
-
+  }, [isLoading, poolDetail, kakao]);
 
   if (!kakao?.maps) return;
 

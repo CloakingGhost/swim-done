@@ -201,10 +201,10 @@ export default function KakaoMapContainer() {
       dispatch(setMap(createMap(mapContainer.current)));
       drawPolygons(seoulGu);
     }
-  }, []);
+  }, [kakao, dispatch]);
 
   if (!kakao?.maps) return;
-  
+
   return (
     <>
       <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
