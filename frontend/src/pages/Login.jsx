@@ -53,7 +53,7 @@ export default function Login() {
         </div>
 
         {/* 네이버 로그인 */}
-        <div className="relative w-fit flex">
+        {/* <div className="relative w-fit flex">
           {recentProvider === 'NAVER' && <RecentLoginLabel />}
           <SocialLoginButton
             provider="naver"
@@ -69,10 +69,10 @@ export default function Login() {
             }
             text="네이버로 계속하기"
           />
-        </div>
+        </div> */}
 
         {/* 깃허브 로그인 */}
-        <div className="relative w-fit flex">
+        {/* <div className="relative w-fit flex">
           {recentProvider === 'GITHUB' && <RecentLoginLabel />}
           <SocialLoginButton
             provider="github"
@@ -94,7 +94,7 @@ export default function Login() {
             }
             text="깃허브로 계속하기"
           />
-        </div>
+        </div>*/}
       </div>
 
       <Link to="/">

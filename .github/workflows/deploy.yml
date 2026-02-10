@@ -46,6 +46,9 @@ jobs:
           echo "SECURE=${{ secrets.SECURE }}" >> .env
           echo "COOKIE_DOMAIN=${{ secrets.COOKIE_DOMAIN }}" >> .env
           echo "SAMESITE=${{ secrets.SAMESITE }}" >> .env
+          echo "SUCCESS_LOGIN=${{ secrets.SUCCESS_LOGIN }}" >> .env
+          echo "GIT_HUB_CLIENT_ID=${{ secrets.GIT_HUB_CLIENT_ID }}" >> .env
+          echo "GIT_HUB_CLIENT_SECRET=${{ secrets.GIT_HUB_CLIENT_SECRET }}" >> .env
           echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
           echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
           echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
