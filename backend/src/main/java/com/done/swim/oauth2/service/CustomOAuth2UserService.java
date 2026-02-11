@@ -26,12 +26,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        log.info("userRequest: {}", userRequest);
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
         // 어떤 OAuth2 제공자인지 확인 (네이버 / 카카오 / 깃허브)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
-        log.info("registrationId: {}", registrationId);
         OAuth2UserInfo oAuth2UserInfo;
 
         // 네이버의 경우 response 객체 내부의 id를 사용해야 함 (response 키 안에 사용자 정보 있음)
