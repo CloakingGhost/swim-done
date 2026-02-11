@@ -46,11 +46,10 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 
         // authentication에서 principal을 가져옴
         CustomOAuth2User oAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-        log.info("oAuth2User: {}", oAuth2User);
+
         // User 객체 가져오기
         User user = oAuth2User.getUser();
-        log.info("user: {}", user);
-        log.info("successLogin: {}", successLogin);
+
         // 액세스 토큰 & 리프레시 토큰 발급
         String accessToken = jwtTokenProvider.createAccessToken(user);
         String refreshToken = jwtTokenProvider.createRefreshToken(user);

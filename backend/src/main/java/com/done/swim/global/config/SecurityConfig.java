@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 관리 설정 (stateless)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/images").authenticated()
-                        .requestMatchers("/login", "/oauth2/**", "/login/oauth2/**", "/login-success", "/logout").permitAll() // 로그인, OAuth2, 로그아웃 엔드포인트 허용
+                        .requestMatchers("/login", "/oauth2/**", "/login-success", "/logout").permitAll() // 로그인, OAuth2, 로그아웃 엔드포인트 허용
                         .requestMatchers("/api/auth/**").permitAll() // API 관련 엔드포인트 허용
                         .requestMatchers(HttpMethod.GET, "/api/pools/**", "/api/sections/**").permitAll() // GET 요청 허용
                         .requestMatchers("/api/swimmingtimes/**").permitAll()
